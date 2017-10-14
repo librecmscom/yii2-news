@@ -101,8 +101,8 @@ class News extends ActiveRecord implements ScanInterface
     {
         $scenarios = parent::scenarios();
         return ArrayHelper::merge($scenarios, [
-            static::SCENARIO_CREATE => [],
-            static::SCENARIO_UPDATE => [],
+            static::SCENARIO_CREATE => ['title','url','description'],
+            static::SCENARIO_UPDATE => ['title','url','description'],
         ]);
     }
 
@@ -113,11 +113,11 @@ class News extends ActiveRecord implements ScanInterface
     public function rules()
     {
         return [
-            [['title', 'sub_title', 'url'], 'required'],
-            [['status', 'views'], 'integer'],
+            [['title', 'url'], 'required'],
             ['url', 'url'],
-            [['slug', 'title', 'description', 'url'], 'string', 'max' => 255],
-            [['sub_title'], 'string', 'max' => 80],
+            [['title', 'description', 'url'], 'string', 'max' => 255],
+
+            [['views'], 'integer'],
             // status rule
             ['status', 'default', 'value' => self::STATUS_REVIEW],
             ['status', 'in', 'range' => [self::STATUS_DRAFT, self::STATUS_REVIEW, self::STATUS_REJECTED, self::STATUS_PUBLISHED]],
@@ -134,7 +134,6 @@ class News extends ActiveRecord implements ScanInterface
             'user_id' => Yii::t('news', 'User ID'),
             'slug' => Yii::t('news', 'Slug'),
             'title' => Yii::t('news', 'Title'),
-            'sub_title' => Yii::t('news', 'Sub Title'),
             'description' => Yii::t('news', 'Description'),
             'status' => Yii::t('news', 'Status'),
             'views' => Yii::t('news', 'Views'),
