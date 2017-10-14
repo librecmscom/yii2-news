@@ -16,17 +16,31 @@ use xutl\inspinia\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'id', [
+        'inputOptions' => [
+            'placeholder' => $model->getAttributeLabel('id'),
+        ],
+    ]) ?>
 
-    <?= $form->field($model, 'user_id') ?>
+    <?= $form->field($model, 'user_id', [
+        'inputOptions' => [
+            'placeholder' => $model->getAttributeLabel('user_id'),
+        ],
+    ]) ?>
 
-    <?= $form->field($model, 'slug') ?>
-
-    <?php // echo $form->field($model, 'title') ?>
+    <?=$form->field($model, 'title', [
+        'inputOptions' => [
+            'placeholder' => $model->getAttributeLabel('title'),
+        ],
+    ]) ?>
 
     <?php // echo $form->field($model, 'description') ?>
 
-    <?php // echo $form->field($model, 'status') ?>
+    <?=$form->field($model, 'status', [
+        'inputOptions' => [
+            'placeholder' => $model->getAttributeLabel('status'),
+        ],
+    ]) ?>
 
     <?php // echo $form->field($model, 'views') ?>
 

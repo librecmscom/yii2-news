@@ -1,15 +1,13 @@
 <?php
 
-namespace yuncms\news\backend\controllers;
+namespace yuncms\news\frontend\controllers;
 
 use Yii;
-use yii\web\Response;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\bootstrap\ActiveForm;
-use yii\web\NotFoundHttpException;
 use yuncms\news\models\News;
-use yuncms\news\backend\models\NewsSearch;
+use yuncms\news\frontend\models\NewsSearch;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
  * NewsController implements the CRUD actions for News model.
@@ -26,7 +24,6 @@ class NewsController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                    'batch-delete' => ['POST'],
                 ],
             ],
         ];
@@ -67,18 +64,14 @@ class NewsController extends Controller
     public function actionCreate()
     {
         $model = new News();
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->getSession()->setFlash('success', Yii::t('news', 'Create success.'));
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -90,18 +83,14 @@ class NewsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->getSession()->setFlash('success', Yii::t('news', 'Update success.'));
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -113,26 +102,7 @@ class NewsController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        Yii::$app->getSession()->setFlash('success', Yii::t('news', 'Delete success.'));
-        return $this->redirect(['index']);
-    }
 
-    /**
-     * Batch Delete existing News model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @return mixed
-     */
-    public function actionBatchDelete()
-    {
-        if (($ids = Yii::$app->request->post('ids', null)) != null) {
-            foreach ($ids as $id) {
-                $model = $this->findModel($id);
-                $model->delete();
-            }
-            Yii::$app->getSession()->setFlash('success', Yii::t('news', 'Delete success.'));
-        } else {
-            Yii::$app->getSession()->setFlash('success', Yii::t('news', 'Delete failed.'));
-        }
         return $this->redirect(['index']);
     }
 
@@ -147,8 +117,8 @@ class NewsController extends Controller
     {
         if (($model = News::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException (Yii::t('yii', 'The requested page does not exist.'));
         }
+
+        throw new NotFoundHttpException(Yii::t('yii', 'The requested page does not exist.'));
     }
 }
