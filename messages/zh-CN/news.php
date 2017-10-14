@@ -17,8 +17,12 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Reset' => '重置',
-    'Search' => '搜索',
+    'Are you sure you want to delete this item?' => '你确定要删除该项目？',
+    'Delete' => '删除',
+    'News' => '头条',
+    'Save' => '保存',
+    'Update' => '更新',
+    'Update News: {nameAttribute}' => '',
     'Batch Deletion' => '批量删除',
     'Create News' => '创建头条',
     'Create success.' => '创建成功',
@@ -34,7 +38,9 @@ return [
     'Published' => '发布',
     'Published At' => '发布时间',
     'Rejected' => '拒绝',
+    'Reset' => '重置',
     'Review' => '待审核',
+    'Search' => '搜索',
     'Slug' => '标识',
     'Status' => '状态',
     'Title' => '标题',
