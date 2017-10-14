@@ -21,13 +21,14 @@ class M171009101011Create_news_table extends Migration
             'slug' => $this->string()->comment('Slug'),
             'title' => $this->string(80)->notNull()->comment('Title'),
             'description' => $this->string()->comment('Description'),
-            'status' => $this->boolean()->defaultValue(false)->comment('Status'),
+            'status' => $this->smallInteger(1)->defaultValue(0b0)->comment('Status'),
             'views' => $this->integer()->notNull()->defaultValue(0)->comment('Views'),
             'url' => $this->string()->notNull()->comment('Url'),
             'published_at' => $this->integer()->comment('Published At'),
             'created_at' => $this->integer()->notNull()->comment('Created At'),
             'updated_at' => $this->integer()->notNull()->comment('Updated At'),
         ], $tableOptions);
+        $this->createIndex('{{%news_index_status}}', '{{%news}}', 'status');
         $this->createIndex('{{%news_index_published_at}}', '{{%news}}', 'published_at');
         $this->addForeignKey('{{%news_fk_1}}', '{{%news}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'RESTRICT');
     }
