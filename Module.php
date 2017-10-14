@@ -6,6 +6,11 @@
  */
 
 namespace yuncms\news;
+
+/**
+ * Class Module
+ * @package yuncms\news
+ */
 class Module extends \yii\base\Module
 {
 
